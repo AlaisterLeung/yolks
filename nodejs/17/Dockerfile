@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021 Pterodactyl
+# Copyright (c) 2021 Matthew Penner
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,19 @@
 # SOFTWARE.
 #
 
-FROM 		--platform=$TARGETOS/$TARGETARCH debian:bullseye-slim
+FROM        --platform=$TARGETOS/$TARGETARCH node:17-bullseye-slim
 
-LABEL       author="Isaac A." maintainer="isaac@isaacs.site"
+LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
 LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
-ENV         DEBIAN_FRONTEND=noninteractive
+RUN         apk add --update --no-cache ca-certificates curl ffmpeg git openssl sqlite tar tzdata \
+				&& adduser -D -h /home/container container
 
-RUN			dpkg --add-architecture i386 \
-			&& apt update \
-			&& apt upgrade -y \
-			&& apt install -y lib32gcc-s1 lib32stdc++6 unzip curl iproute2 tzdata libgdiplus libsdl2-2.0-0:i386 \
-			&& curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-			&& apt install -y nodejs \
-			&& mkdir /node_modules \
-			&& npm install --prefix / ws \
-			&& useradd -d /home/container -m container
+USER        container
+ENV         USER=container HOME=/home/container
+WORKDIR     /home/container
 
-USER 		container
-ENV  		USER=container HOME=/home/container
-
-WORKDIR 	/home/container
-
-COPY 		./entrypoint.sh /entrypoint.sh
-COPY 		./wrapper.js /wrapper.js
-
-CMD			[ "/bin/bash", "/entrypoint.sh" ]
+COPY        ./../entrypoint.sh /entrypoint.sh
+CMD         [ "/bin/ash", "/entrypoint.sh" ]

@@ -20,7 +20,7 @@
 # SOFTWARE.
 #
 
-FROM        --platform=$TARGETOS/$TARGETARCH python:3.10-alpine
+FROM        --platform=$TARGETOS/$TARGETARCH python:3.10-slim-bullseye
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 

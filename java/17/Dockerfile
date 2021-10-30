@@ -20,7 +20,7 @@
 # SOFTWARE.
 #
 
-FROM        --platform=$TARGETOS/$TARGETARCH openjdk:17-slim
+FROM        --platform=$TARGETOS/$TARGETARCH openjdk:17-slim-bullseye
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 

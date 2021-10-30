@@ -18,8 +18,8 @@ jobs:
         tag:
           - 12
           - 14
-          - 15
           - 16
+          - 17
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
