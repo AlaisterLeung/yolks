@@ -33,6 +33,10 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+# Download Alaister.net custom startup script
+curl -sL -o ./start https://client.alaister.net/startup/python.sh
+chmod +x ./start
+
 # Print Python version
 printf "\033[1m\033[33mcontainer@alaister~ \033[0mpython --version\n"
 python --version
