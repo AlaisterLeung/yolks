@@ -33,6 +33,10 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+# Download Alaister.net custom startup script
+curl -sL -o ./start https://client.alaister.net/startup/bedrock.sh
+chmod +x ./start
+
 # Convert all of the "{{VARIABLE}}" parts of the command into the expected shell
 # variable format of "${VARIABLE}" before evaluating the string and automatically
 # replacing the values.
