@@ -40,7 +40,6 @@ jobs:
           rm -f ./java/entrypoint.sh
           cp ./java/${{ matrix.type }}/entrypoint.sh ./java/entrypoint.sh
       - uses: docker/build-push-action@v2
-      - uses: docker/build-push-action@v2
         with:
           context: ./java
           file: ./java/${{ matrix.tag }}/Dockerfile
