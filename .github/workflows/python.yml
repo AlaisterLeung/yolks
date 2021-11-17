@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         tag:
-          - 3.7
-          - 3.8
-          - 3.9
+          - "3.7"
+          - "3.8"
+          - "3.9"
           - "3.10"
     steps:
       - uses: actions/checkout@v2
@@ -38,4 +38,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/alaisterleung/yolks:python_${{ matrix.tag }}
+            ghcr.io/alaister-net/yolks:python_${{ matrix.tag }}

@@ -34,12 +34,8 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Download Alaister.net custom startup script
-curl -sL -o ./start https://client.alaister.net/startup/javabot.sh
+curl -sL -o ./start https://github.com/alaister-net/server-startup-scripts/raw/master/minecraft_bedrock.sh
 chmod +x ./start
-
-# Print Java version
-printf "\033[1m\033[33mcontainer@alaister~ \033[0mjava -version\n"
-java -version
 
 # Convert all of the "{{VARIABLE}}" parts of the command into the expected shell
 # variable format of "${VARIABLE}" before evaluating the string and automatically

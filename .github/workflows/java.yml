@@ -10,11 +10,15 @@ on:
       - java/**
 jobs:
   push:
-    name: "yolks:java_${{ matrix.tag }}"
+    name: "yolks:${{ matrix.type }}_${{ matrix.tag }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        type:
+          - java
+          - minecraft_java
+          - minecraft_proxy
         tag:
           - 8
           - 11
@@ -32,6 +36,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.REGISTRY_TOKEN }}
+      - name: Copy entrypoint.sh
+        run: |
+          rm -f ./java/entrypoint.sh
+          cp ./java/${{ matrix.type }}/entrypoint.sh ./java/entrypoint.sh
+      - uses: docker/build-push-action@v2
       - uses: docker/build-push-action@v2
         with:
           context: ./java
@@ -39,4 +48,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/alaisterleung/yolks:java_${{ matrix.tag }}
+            ghcr.io/alaister-net/yolks:${{ matrix.type }}_${{ matrix.tag }}
