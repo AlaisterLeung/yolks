@@ -18,6 +18,7 @@ jobs:
         type:
           - java
           - minecraft_java
+          - minecraft_java_no_hibernate
           - minecraft_proxy
         tag:
           - 8
