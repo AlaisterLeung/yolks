@@ -34,7 +34,7 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Download Alaister.net custom startup script
-curl -sL -o ./start https://github.com/alaister-net/server-startup-scripts/raw/master/minecraft_bedrock.sh
+wget -nv -O ./start https://github.com/alaister-net/server-startup-scripts/raw/master/minecraft_bedrock.sh
 chmod +x ./start
 
 # Convert all of the "{{VARIABLE}}" parts of the command into the expected shell

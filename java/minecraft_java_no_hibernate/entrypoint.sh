@@ -34,7 +34,7 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Download Alaister.net custom startup script
-curl -sL -o ./start https://github.com/alaister-net/server-startup-scripts/raw/master/minecraft_java_no_hibernate.sh
+wget -nv -O ./start https://github.com/alaister-net/server-startup-scripts/raw/master/minecraft_java_no_hibernate.sh
 chmod +x ./start
 
 # Print Java version
