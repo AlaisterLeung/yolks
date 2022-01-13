@@ -27,8 +27,11 @@ LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
-RUN         apt-get update -y \
- 			&& apt-get install -y curl wget ca-certificates openssl git tar unzip sqlite3 fontconfig tzdata iproute2 libstdc++6 \
+RUN         apt update -y && apt upgrade -y \
+ 			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev fontconfig tzdata iproute2 libstdc++6 \
+ 			gcc g++ libgcc1 lib32gcc-s1 libc++-dev gdb libc6 binutils xz-utils liblzo2-2 cabextract net-tools netcat telnet libatomic1 libsdl1.2debian libsdl2-2.0-0 \
+ 			libfontconfig libicu67 icu-devtools libunwind8 libssl-dev libmariadbclient-dev-compat libduktape205 locales ffmpeg gnupg2 apt-transport-https software-properties-common \
+ 			liblua5.3-0 libz-dev rapidjson-dev libevent-dev libzip4
  			&& useradd -d /home/container -m container
 
 USER        container
