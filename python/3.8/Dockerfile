@@ -29,6 +29,7 @@ LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apt update -y \
  			&& apt install -y curl wget cmake make ca-certificates openssl git tar zip unzip sqlite3 fontconfig tzdata iproute2 libstdc++6 gcc g++ dnsutils ffmpeg procps \
+ 			&& pip3 install -U pip \
  			&& useradd -d /home/container -m container
 
 USER        container
