@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - nodejs/*
+      - nodejs/**
 jobs:
   push:
     name: "yolks:nodejs_${{ matrix.tag }}"
