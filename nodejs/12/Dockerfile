@@ -32,6 +32,7 @@ RUN         apt update -y \
  			&& npm install -g npm \
  			&& npm uninstall -g yarn pnpm \
  			&& npm install -g corepack --force \
+			&& npm config set python python3 \
  			&& useradd -d /home/container -m container
 
 USER        container

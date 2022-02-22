@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 # Copyright (c) 2021 Matthew Penner
 #
@@ -20,23 +22,28 @@
 # SOFTWARE.
 #
 
-FROM        --platform=$TARGETOS/$TARGETARCH node:16-bullseye-slim
+# Default the TZ environment variable to UTC.
+TZ=${TZ:-UTC}
+export TZ
 
-LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
+# Set environment variable that holds the Internal Docker IP
+INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
+export INTERNAL_IP
 
-LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
-LABEL       org.opencontainers.image.licenses=MIT
+# Switch to the container's working directory
+cd /home/container || exit 1
 
-RUN         apt update -y \
- 			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool \
- 			&& npm install -g npm \
- 			&& corepack enable \
-			&& npm config set python python3 \
- 			&& useradd -d /home/container -m container
+# Print Node.js version
+printf "\033[1m\033[33mcontainer@alaister~ \033[0mnode -v\n"
+node -v
 
-USER        container
-ENV         USER=container HOME=/home/container
-WORKDIR     /home/container
+# Convert all of the "{{VARIABLE}}" parts of the command into the expected shell
+# variable format of "${VARIABLE}" before evaluating the string and automatically
+# replacing the values.
+PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)")
 
-COPY        ./../entrypoint.sh /entrypoint.sh
-CMD         [ "/bin/bash", "/entrypoint.sh" ]
+# Display the command we're running in the output, and then execute it with the env
+# from the container itself.
+printf "\033[1m\033[33mcontainer@alaister~ \033[0m%s\n" "$PARSED"
+# shellcheck disable=SC2086
+exec env ${PARSED}

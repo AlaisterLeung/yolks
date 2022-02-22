@@ -20,7 +20,7 @@
 # SOFTWARE.
 #
 
-FROM        --platform=$TARGETOS/$TARGETARCH node:16-bullseye-slim
+FROM        --platform=$TARGETOS/$TARGETARCH node:14-bullseye-slim
 
 LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 
@@ -28,10 +28,12 @@ LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolk
 LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apt update -y \
- 			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool \
+ 			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool pkg-config \
  			&& npm install -g npm \
- 			&& corepack enable \
+ 			&& npm uninstall -g yarn pnpm \
+ 			&& npm install -g corepack --force \
 			&& npm config set python python3 \
+			&& yarn global add code-server \
  			&& useradd -d /home/container -m container
 
 USER        container
