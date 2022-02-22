@@ -33,6 +33,15 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+if [ ! -s .config/code-server/config.yaml ]; then
+    cat << EOF > .config/code-server/config.yaml
+bind-addr: ${SERVER_IP}:${SERVER_PORT}
+auth: password
+password: changeme
+cert: false
+EOF
+fi
+
 # Print Node.js version
 printf "\033[1m\033[33mcontainer@alaister~ \033[0mnode -v\n"
 node -v

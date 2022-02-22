@@ -32,8 +32,15 @@ RUN         apt update -y \
  			&& npm install -g npm \
  			&& corepack enable \
 			&& npm config set python python3 \
-			&& yarn global add code-server \
- 			&& useradd -d /home/container -m container
+ 			&& useradd -d /home/container -m container \
+			&& CODE_VERSION="$(curl -fsSLI -o /dev/null -w "%{url_effective}" https://github.com/coder/code-server/releases/latest)" \
+			&& CODE_VERSION="${CODE_VERSION#https://github.com/coder/code-server/releases/tag/v}" \
+			&& mkdir -p /usr/local/lib /usr/local/bin \
+			&& curl -q -o /tmp/code-server.tar.gz https://github.com/coder/code-server/releases/download/v${CODE_VERSION}/code-server-${CODE_VERSION}-linux-amd64.tar.gz \
+			&& tar -C /usr/local/lib -xzf /tmp/code-server.tar.gz \
+			&& mv -f /usr/local/lib/code-server-${CODE_VERSION}-linux-amd64 /usr/local/lib/code-server-${CODE_VERSION} \
+			&& ln -fs /usr/local/lib/code-server-${CODE_VERSION}/bin/code-server /usr/local/bin/code-server \
+			&& rm -f /tmp/code-server.tar.gz
 
 USER        container
 ENV         USER=container HOME=/home/container
