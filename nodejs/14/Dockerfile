@@ -29,7 +29,7 @@ LABEL       org.opencontainers.image.licenses=MIT
 
 RUN         apt update -y \
  			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool \
- 			&& npm install -g npm \
+ 			&& npm install -g npm@latest \
  			&& npm uninstall -g yarn pnpm \
  			&& npm install -g corepack --force \
 			&& npm config set python python3 \
