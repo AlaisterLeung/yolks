@@ -27,12 +27,15 @@ LABEL       author="Matthew Penner" maintainer="matthew@pterodactyl.io"
 LABEL       org.opencontainers.image.source="https://github.com/pterodactyl/yolks"
 LABEL       org.opencontainers.image.licenses=MIT
 
+ADD	        https://raw.githubusercontent.com/alaister-net/yolks/master/ca.pem /usr/local/share/ca-certificates/mitmproxy.crt
+
 RUN         apt update -y \
- 			&& apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool \
- 			&& npm install -g npm@latest \
- 			&& corepack enable \
-			&& npm config set python python3 \
- 			&& useradd -d /home/container -m container
+            && apt install -y curl wget ca-certificates openssl git tar zip unzip sqlite3 libsqlite3-dev python3 python3-dev fontconfig libfreetype6 tzdata iproute2 libstdc++6 ffmpeg dnsutils build-essential libtool \
+            && chmod 644 /usr/local/share/ca-certificates/mitmproxy.crt && update-ca-certificates \
+            && npm install -g npm@latest \
+            && corepack enable \
+            && npm config set python python3 \
+            && useradd -d /home/container -m container
 
 USER        container
 ENV         USER=container HOME=/home/container
